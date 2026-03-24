@@ -1,0 +1,172 @@
+/* ─── Global ─── */
+
+Screen {
+    background: $surface;
+}
+
+#main-container {
+    height: 1fr;
+}
+
+/* ─── Sidebar ─── */
+
+#sidebar {
+    width: 28;
+    background: $panel;
+    border-right: thick $primary-background-darken-2;
+    padding: 0;
+}
+
+#sidebar-title {
+    text-align: center;
+    text-style: bold;
+    color: $accent;
+    padding: 1 2;
+    background: $primary-background-darken-1;
+}
+
+#filter-list {
+    padding: 1 0;
+}
+
+ToolFilterItem {
+    padding: 0 2;
+    height: 3;
+    content-align-vertical: middle;
+}
+
+ToolFilterItem:hover {
+    background: $boost;
+}
+
+ToolFilterItem.active {
+    background: $accent 30%;
+    text-style: bold;
+}
+
+ToolFilterItem.active #filter-label {
+    color: $text;
+    text-style: bold;
+}
+
+/* ─── Skill List ─── */
+
+#skill-list {
+    width: 1fr;
+    min-width: 30;
+    max-width: 50;
+    border-right: thick $primary-background-darken-2;
+}
+
+#search-input {
+    margin: 1 1 0 1;
+}
+
+#skill-scroll {
+    padding: 0;
+}
+
+SkillListItem {
+    padding: 1 2;
+    height: auto;
+    border-bottom: dashed $primary-background-darken-1;
+}
+
+SkillListItem:hover {
+    background: $boost;
+}
+
+SkillListItem.active {
+    background: $accent 25%;
+}
+
+.skill-name {
+    text-style: bold;
+    color: $text;
+}
+
+.skill-desc {
+    color: $text-muted;
+}
+
+/* ─── Detail Panel ─── */
+
+#detail-panel {
+    width: 2fr;
+    padding: 0;
+}
+
+#detail-header {
+    text-style: bold;
+    color: $accent;
+    padding: 1 2;
+    background: $primary-background-darken-1;
+    height: 3;
+}
+
+#detail-meta {
+    color: $text-muted;
+    padding: 0 2;
+    height: 2;
+}
+
+#detail-unsaved {
+    color: $warning;
+    text-style: italic;
+    padding: 0 2;
+    height: auto;
+}
+
+#detail-editor {
+    margin: 1 1;
+    height: 1fr;
+}
+
+#detail-empty {
+    color: $text-muted;
+    text-align: center;
+    padding: 5 2;
+    width: 100%;
+    height: 100%;
+    content-align: center middle;
+}
+
+/* ─── New Skill Dialog ─── */
+
+NewSkillScreen {
+    align: center middle;
+}
+
+#new-skill-dialog {
+    width: 60;
+    height: auto;
+    max-height: 24;
+    background: $panel;
+    border: round $accent;
+    padding: 1 2;
+}
+
+#dialog-title {
+    text-style: bold;
+    text-align: center;
+    color: $accent;
+    padding-bottom: 1;
+}
+
+#dialog-error {
+    color: $error;
+    padding-top: 1;
+}
+
+#new-skill-dialog Button {
+    margin-top: 1;
+    width: 100%;
+}
+
+#new-skill-dialog Input {
+    margin-bottom: 1;
+}
+
+#new-skill-dialog Select {
+    margin-bottom: 1;
+}
