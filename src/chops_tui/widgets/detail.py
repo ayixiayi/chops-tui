@@ -26,7 +26,6 @@ class DetailPanel(Widget):
             yield Static("", id="detail-name")
             yield Static("", id="detail-tools")
             yield Static("", id="detail-path")
-            yield Static("", id="detail-modified")
             yield Static("", id="detail-desc")
         yield Static("", id="detail-unsaved")
         yield TextArea(id="detail-editor", language="markdown")
@@ -40,16 +39,19 @@ class DetailPanel(Widget):
             f"{TOOL_CONFIG_BY_SOURCE[s].icon} {TOOL_CONFIG_BY_SOURCE[s].label}"
             for s in skill.tool_sources
         )
-        modified = skill.modified_time.strftime("%Y-%m-%d %H:%M:%S")
-        desc = skill.description
-        if len(desc) > 200:
-            desc = desc[:200] + "..."
+        modified = skill.modified_time.strftime("%Y-%m-%d %H:%M")
+        desc = skill.description.replace("\n", " ").strip()
+        if len(desc) > 120:
+            desc = desc[:120] + "..."
+
+        short_path = str(skill.file_path).replace(str(Path.home()), "~")
 
         self.query_one("#detail-name", Static).update(skill.name)
-        self.query_one("#detail-tools", Static).update(f"Tools:     {badges}")
-        self.query_one("#detail-path", Static).update(f"Path:      {skill.file_path}")
-        self.query_one("#detail-modified", Static).update(f"Modified:  {modified}")
-        self.query_one("#detail-desc", Static).update(f"About:     {desc}")
+        self.query_one("#detail-tools", Static).update(
+            f"Tools: {badges}  |  {modified}"
+        )
+        self.query_one("#detail-path", Static).update(f"Path:  {short_path}")
+        self.query_one("#detail-desc", Static).update(desc)
 
         editor = self.query_one("#detail-editor", TextArea)
         editor.load_text(skill.content)
