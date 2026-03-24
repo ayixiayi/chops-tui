@@ -96,18 +96,39 @@ SkillListItem.active {
     padding: 0;
 }
 
-#detail-header {
-    text-style: bold;
-    color: $accent;
+#detail-info {
+    height: auto;
+    max-height: 12;
     padding: 1 2;
     background: $primary-background-darken-1;
-    height: 3;
 }
 
-#detail-meta {
+#detail-name {
+    text-style: bold;
+    color: $accent;
+    height: auto;
+    padding-bottom: 1;
+}
+
+#detail-tools {
+    color: $text;
+    height: auto;
+}
+
+#detail-path {
     color: $text-muted;
-    padding: 0 2;
-    height: 2;
+    height: auto;
+}
+
+#detail-modified {
+    color: $text-muted;
+    height: auto;
+}
+
+#detail-desc {
+    color: $text-muted;
+    height: auto;
+    padding-top: 1;
 }
 
 #detail-unsaved {

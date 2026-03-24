@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from textual.app import ComposeResult
+from textual.containers import Vertical
 from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import Label, Static, TextArea
@@ -21,8 +22,12 @@ class DetailPanel(Widget):
         self._original_content: str = ""
 
     def compose(self) -> ComposeResult:
-        yield Static("", id="detail-header")
-        yield Static("", id="detail-meta")
+        with Vertical(id="detail-info"):
+            yield Static("", id="detail-name")
+            yield Static("", id="detail-tools")
+            yield Static("", id="detail-path")
+            yield Static("", id="detail-modified")
+            yield Static("", id="detail-desc")
         yield Static("", id="detail-unsaved")
         yield TextArea(id="detail-editor", language="markdown")
         yield Static("Select a skill from the list to view details", id="detail-empty")
@@ -31,25 +36,27 @@ class DetailPanel(Widget):
         self._current_skill = skill
         self._original_content = skill.content
 
-        badges = " ".join(
+        badges = "  ".join(
             f"{TOOL_CONFIG_BY_SOURCE[s].icon} {TOOL_CONFIG_BY_SOURCE[s].label}"
             for s in skill.tool_sources
         )
-        modified = skill.modified_time.strftime("%Y-%m-%d %H:%M")
+        modified = skill.modified_time.strftime("%Y-%m-%d %H:%M:%S")
+        desc = skill.description
+        if len(desc) > 200:
+            desc = desc[:200] + "..."
 
-        header = self.query_one("#detail-header", Static)
-        header.update(f"  {skill.name}")
-
-        meta = self.query_one("#detail-meta", Static)
-        meta.update(f"  {badges}  |  {skill.file_path}  |  Modified: {modified}")
+        self.query_one("#detail-name", Static).update(skill.name)
+        self.query_one("#detail-tools", Static).update(f"Tools:     {badges}")
+        self.query_one("#detail-path", Static).update(f"Path:      {skill.file_path}")
+        self.query_one("#detail-modified", Static).update(f"Modified:  {modified}")
+        self.query_one("#detail-desc", Static).update(f"About:     {desc}")
 
         editor = self.query_one("#detail-editor", TextArea)
         editor.load_text(skill.content)
 
         self.has_unsaved = False
         self.query_one("#detail-empty", Static).display = False
-        self.query_one("#detail-header", Static).display = True
-        self.query_one("#detail-meta", Static).display = True
+        self.query_one("#detail-info", Vertical).display = True
         self.query_one("#detail-editor", TextArea).display = True
 
     def on_text_area_changed(self, event: TextArea.Changed) -> None:
